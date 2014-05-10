@@ -27,7 +27,7 @@ public class GUI {
 		login.add(login_top, BorderLayout.NORTH);
 		
 		about_button = new JButton();
-		about_button.setPreferredSize(new Dimension(140,160));
+		about_button.setPreferredSize(new Dimension(240,160));
 		about_button.setIcon(new ImageIcon("images/21.jpg"));
 		about_button.addActionListener(new doAction());
 		login_top.add(about_button);
