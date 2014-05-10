@@ -4,6 +4,8 @@ import java.util.*;
 
 public class Server
 {
+	
+	private Map<String, PlayerThread> players = new HashMap<String, PlayerThread>();
 	private int count = 1;
 	
 	public static void main(String[] arguments)
@@ -28,11 +30,19 @@ public class Server
 		  {
 			try
 			{
-				ClientThread t = new ClientThread(serv_socket.accept());
-				t.start();
-				//System.out.println(t.getId());
-				System.out.println("ClientThread " + count++ + " Started ...");
-
+				Socket player = serv_socket.accept();
+				if (player != null){
+					String playerName = "test";
+					// player.getInputStream();
+					if (!players.containsKey(playerName)){
+						PlayerThread t = new PlayerThread(player);
+						players.put(playerName, t);
+						t.start();
+						//System.out.println(t.getId());
+						System.out.println("ClientThread " + count++ + " Started ...");
+					}
+				}
+				// return error message 
 			}
 			 catch (IOException e) {
 				System.err.println(e);
@@ -40,22 +50,4 @@ public class Server
 			 }
 		  }
 	}
-	
-	/*
-	class ClientThread extends Thread 
-	{
-		private Socket client = null;
-			
-		public ClientThread(Socket sock)
-		{
-			super("ClientThread");
-			client = sock;
-		}
-			
-		public void run()
-		{
-			
-		}
-	}
-	*/
 }
