@@ -25,9 +25,11 @@ public class Player
             	int commond = (Integer)inFromServer.readObject();
             	if (commond == Command.pass){
             		return true;
+            	} else {
+            		connection.close();
+            		return false;
             	}
             }
-            return true;
 		}
 		catch (IOException e)
 		{
@@ -40,9 +42,11 @@ public class Player
 		
 	}
 	
-	public void maintainConnection(){
+	public void waitingServerObj(){
 		while(true){
-			//inFromSever.ge
+			//get serverobject
+			//identify object with command
+			//call doaction function.
 		}
 	}
 }
