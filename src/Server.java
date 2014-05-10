@@ -18,9 +18,9 @@ public class Server
 		  ServerSocket serv_socket = null;
 		  try
 		  {
-				serv_socket = new ServerSocket(4413);
+				serv_socket = new ServerSocket(4430);
 				System.out.println("Blackjack up and running ...");
-		  } 
+		  }
 		  catch (Exception e) {
 				System.err.println(e);
 				System.exit(1);
@@ -31,17 +31,24 @@ public class Server
 			try
 			{
 				Socket player = serv_socket.accept();
+				System.out.println("Socket Extablished...");
+				
+				ObjectOutputStream outToClient = new ObjectOutputStream(player.getOutputStream());
+	            ObjectInputStream inFromClient = new ObjectInputStream(player.getInputStream());
+	            
 				if (player != null){
-					String playerName = "test";
-					// player.getInputStream();
+					String playerName = (String)inFromClient.readObject();
 					if (!players.containsKey(playerName)){
 						PlayerThread t = new PlayerThread(player);
 						players.put(playerName, t);
 						t.start();
-						//System.out.println(t.getId());
 						System.out.println("ClientThread " + count++ + " Started ...");
+						outToClient.writeObject(Command.pass);
+					} else {
+						outToClient.writeObject(Command.nameTaken);
 					}
 				}
+				
 				// return error message 
 			}
 			 catch (IOException e) {
