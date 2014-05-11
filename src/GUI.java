@@ -10,11 +10,12 @@ public class GUI {
 	static JFrame login, about, game;
 	static JButton about_button, login_button;
 	static JLabel  message_label;
+	static JTextField username_text;
+	static Player p;
 	
 	public GUI(){
 		JPanel login_top, login_bottom, waiting;
 		JLabel username_label, waiting_label;
-		JTextField username_text;
 		JTextArea about_text;
 		
 		// Login Frame
