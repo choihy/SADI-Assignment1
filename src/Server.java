@@ -37,15 +37,21 @@ public class Server
 	            ObjectInputStream inFromClient = new ObjectInputStream(player.getInputStream());
 	            
 				if (player != null){
-					String playerName = (String)inFromClient.readObject();
-					if (!players.containsKey(playerName)){
-						PlayerThread t = new PlayerThread(player);
-						players.put(playerName, t);
-						t.start();
-						System.out.println("ClientThread " + count++ + " Started ...");
-						outToClient.writeObject(Command.pass);
-					} else {
-						outToClient.writeObject(Command.nameTaken);
+					String playerName;
+					try {
+						playerName = (String)inFromClient.readObject();
+						if (!players.containsKey(playerName)){
+							PlayerThread t = new PlayerThread(player);
+							players.put(playerName, t);
+							t.start();
+							System.out.println("ClientThread " + count++ + " Started ...");
+							outToClient.writeObject(Command.pass);
+						} else {
+							outToClient.writeObject(Command.nameTaken);
+						}
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 				

@@ -1,10 +1,7 @@
 import java.io.*;
 import java.net.*;
-<<<<<<< HEAD
 import java.util.*;
 
-=======
->>>>>>> FETCH_HEAD
 public class Player
 {
 	private static final int ip_port = 4413;
@@ -27,13 +24,19 @@ public class Player
             inFromServer = new ObjectInputStream(connection.getInputStream());
             outToServer.writeObject(username);
             while(true){
-            	int commond = (Integer)inFromServer.readObject();
-            	if (commond == Command.pass){
-            		return true;
-            	} else {
-            		connection.close();
-            		return false;
-            	}
+            	int commond;
+				try {
+					commond = (Integer)inFromServer.readObject();
+					if (commond == Command.pass){
+	            		return true;
+	            	} else {
+	            		connection.close();
+	            		return false;
+	            	}
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
 		}
 		catch (IOException e)
