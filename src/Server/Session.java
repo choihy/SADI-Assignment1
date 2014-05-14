@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import Player.Player;
 
 
-public class Session {
+public class Session extends Thread{
 
 	private ArrayList<Integer> list = new ArrayList<Integer>();
 	private ArrayList<PlayerThread> players = new ArrayList<PlayerThread>();
@@ -37,7 +37,7 @@ public class Session {
 		list.remove(num);
 	}
 	
-	public void start(){
+	public void run(){
 		
 	}
 }

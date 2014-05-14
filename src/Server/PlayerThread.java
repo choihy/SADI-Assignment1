@@ -29,8 +29,9 @@ public class PlayerThread extends Thread
 	{
 		while(player.isConnected()){
 			switch(receive()){
-			case Command.call:
-				break;
+				case Command.join:
+						Server.joinSessionRoom(playerName);
+					break;
 			}
 		}
 	}

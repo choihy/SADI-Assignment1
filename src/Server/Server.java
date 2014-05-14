@@ -7,8 +7,8 @@ import java.util.*;
 public class Server
 {
 	static ArrayList<Session> session_room = new ArrayList<Session>();
-	static Session room;
-	private Map<String, PlayerThread> playersName = new HashMap<String, PlayerThread>();
+	static String player1, player2;
+	static Map<String, PlayerThread> players = new HashMap<String, PlayerThread>();
 	private int count = 1;
 	
 	public static void main(String[] arguments)
@@ -19,7 +19,6 @@ public class Server
 	public Server()
 	{
 		  ServerSocket serv_socket = null;
-		  room = null;
 		  try
 		  {
 				serv_socket = new ServerSocket(4430);
@@ -39,9 +38,9 @@ public class Server
 				if (player != null){
 					PlayerThread pt = new PlayerThread(player);
 					String playerName = pt.getPlayerName();
-					if (!playersName.containsKey(playerName)){
+					if (!players.containsKey(playerName)){
 						pt.start();
-						playersName.put(playerName, pt);
+						players.put(playerName, pt);
 						pt.send(Command.connectSuccess);
 						System.out.println("PlayerThread " + count++ + " Started ...");
 					}else{
@@ -54,5 +53,19 @@ public class Server
 				System.exit(1);
 			 }
 		  }
+	}
+	
+	public static void joinSessionRoom(String name){
+		if (player1 != null){
+			player2 = name;
+		}else if (player1 != null && player2 != null){
+			Session session = new Session(players.get(player1), players.get(player2));
+			session.start();
+			session_room.add(session);
+			player1 = null;
+			player2 = null;
+		} else{
+			player1 = name;
+		}
 	}
 }
