@@ -29,7 +29,7 @@ public class Session extends Thread{
 		}
 	}
 	
-	public void giveCard(PlayerThread p){
+	public void giveCard(){
 		int num = (int) Math.random() % list.size();
 		for(int i=0; i<players.size(); i++){
 			players.get(i);
@@ -38,6 +38,8 @@ public class Session extends Thread{
 	}
 	
 	public void run(){
+		p1.send(Command.startGame);
+		p2.send(Command.startGame);
 		
 	}
 }
