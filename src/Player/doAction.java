@@ -13,7 +13,7 @@ public class doAction implements ActionListener {
 			GUI.about.setVisible(true);
 		} else if (source == GUI.login_button){
 			GUI.p = new Player();
-			switch(GUI.p.getConnection(GUI.username_text.getText()))
+			switch(GUI.p.getConnection(GUI.username_text.getText())){
 				case Command.connectSuccess:
 					GUI.login.dispose();
 					GUI.about.dispose();
@@ -21,6 +21,7 @@ public class doAction implements ActionListener {
 					GUI.game.setTitle("Game - Room No .");
 					GUI.p.waitingServerObj();
 					break;
+			}
 		}
 	}
 }
