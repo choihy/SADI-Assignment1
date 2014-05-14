@@ -1,6 +1,9 @@
+package Player;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import Server.Command;
 
 public class Player
 {
@@ -9,7 +12,7 @@ public class Player
 	private ObjectOutputStream outToServer;
 	private ObjectInputStream inFromServer;
 	
-	public boolean getConnection(String username){
+	public int getConnection(String username){
 		Socket          socket;
 		String          ip_address;
 			
@@ -24,17 +27,9 @@ public class Player
             inFromServer = new ObjectInputStream(connection.getInputStream());
             outToServer.writeObject(username);
             while(true){
-            	int commond;
 				try {
-					commond = (Integer)inFromServer.readObject();
-					if (commond == Command.pass){
-	            		return true;
-	            	} else {
-	            		connection.close();
-	            		return false;
-	            	}
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
+					return inFromServer.readInt();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
             }
@@ -42,12 +37,8 @@ public class Player
 		catch (IOException e)
 		{
 			System.err.println(e);
-			return false;
 		}
-	}
-	
-	public void getCard(int num){
-		
+		return 0;
 	}
 	
 	public void waitingServerObj(){

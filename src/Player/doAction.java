@@ -1,5 +1,8 @@
+package Player;
 
 import java.awt.event.*;
+
+import Server.Command;
 
 public class doAction implements ActionListener {
 
@@ -10,13 +13,14 @@ public class doAction implements ActionListener {
 			GUI.about.setVisible(true);
 		} else if (source == GUI.login_button){
 			GUI.p = new Player();
-			if (GUI.p.getConnection(GUI.username_text.getText())){
-				GUI.login.dispose();
-				GUI.about.dispose();
-				GUI.game.setVisible(true);
-				GUI.game.setTitle("Game - Room No .");
-				GUI.p.waitingServerObj();
-			}
+			switch(GUI.p.getConnection(GUI.username_text.getText()))
+				case Command.connectSuccess:
+					GUI.login.dispose();
+					GUI.about.dispose();
+					GUI.game.setVisible(true);
+					GUI.game.setTitle("Game - Room No .");
+					GUI.p.waitingServerObj();
+					break;
 		}
 	}
 }

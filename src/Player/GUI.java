@@ -1,3 +1,4 @@
+package Player;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;
