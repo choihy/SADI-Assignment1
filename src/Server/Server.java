@@ -6,6 +6,7 @@ import java.util.*;
 
 public class Server
 {
+	public static final int ip_port = 8071;
 	static ArrayList<Session> session_room = new ArrayList<Session>();
 	static String player1, player2;
 	static Map<String, PlayerThread> players = new HashMap<String, PlayerThread>();
@@ -21,7 +22,7 @@ public class Server
 		  ServerSocket serv_socket = null;
 		  try
 		  {
-				serv_socket = new ServerSocket(4430);
+				serv_socket = new ServerSocket(ip_port);
 				System.out.println("Blackjack up and running ...");
 		  }
 		  catch (Exception e) {
@@ -39,10 +40,10 @@ public class Server
 					PlayerThread pt = new PlayerThread(player);
 					String playerName = pt.getPlayerName();
 					if (!players.containsKey(playerName)){
-						pt.start();
 						players.put(playerName, pt);
 						pt.send(Command.connectSuccess);
-						System.out.println("PlayerThread " + count++ + " Started ...");
+						System.out.println(playerName+" : PlayerThread " + count++ + " Started ...");
+						pt.start();
 					}else{
 						pt.send(Command.nameTaken);
 					}

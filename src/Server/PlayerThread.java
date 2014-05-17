@@ -27,10 +27,16 @@ public class PlayerThread extends Thread
 
 	public void run()
 	{
-		while(player.isConnected()){
-			switch(receive()){
+		int num;
+		System.out.println("running.....");
+		while((num = receive()) != Command.stop){
+			System.out.println(num);
+			switch(num){
 				case Command.join:
 						Server.joinSessionRoom(playerName);
+					break;
+				case Command.send:
+					
 					break;
 			}
 		}
@@ -46,12 +52,12 @@ public class PlayerThread extends Thread
 	
 	public int receive(){
 		try {
-			return inFromClient.readInt();
+			return (Integer)inFromClient.readObject();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
-		return 0;
+		return Command.stop;
 	}
 	
 	public String getPlayerName(){
