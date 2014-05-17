@@ -3,6 +3,7 @@ package Server;
 public class Command
 {
 	// login
+	/aa
 	public static final int nameTaken = 1001;
 	public static final int connectFail = 1002;
 	public static final int connectSuccess = 1003;
