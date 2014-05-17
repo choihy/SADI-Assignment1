@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
-import java.util.Iterator;
 import java.util.Map.Entry;
 
 public class PlayerThread extends Thread 
@@ -52,6 +51,7 @@ public class PlayerThread extends Thread
 					break;
 			}
 		}
+		Server.players.remove(playerName);
 	}
 	
 	public void send(Object command)
