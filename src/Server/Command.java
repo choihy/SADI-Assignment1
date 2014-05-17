@@ -2,8 +2,7 @@ package Server;
 
 public class Command
 {
-	// login
-	//aa
+	// login123
 	public static final int nameTaken = 1001;
 	public static final int connectFail = 1002;
 	public static final int connectSuccess = 1003;
@@ -16,7 +15,6 @@ public class Command
 	// menu
 	public static final int join = 2006;
 	public static final int observe = 2007;
-	public static final int create = 2008;
 	public static final int send = 2009;
 	// character
 	public static final int observer = 3000;
