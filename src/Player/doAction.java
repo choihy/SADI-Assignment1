@@ -14,12 +14,14 @@ public class doAction implements ActionListener {
 		} else if (source == GUI.login_button){
 			String name = GUI.username_text.getText();
 			GUI.player = new Player();
+			//GUI.player.start();
 			switch(GUI.player.getConnection(name)){
 				case Command.connectSuccess:
 					GUI.login.dispose();
 					GUI.about.dispose();
 					GUI.playerName_label.setText(name+" : ");
 					GUI.menu.setVisible(true);
+					GUI.player.start();
 					break;
 				case Command.nameTaken:
 					GUI.message_label.setText("The name : ("+name+")is already in use.");
@@ -35,7 +37,8 @@ public class doAction implements ActionListener {
 		} else if (source == GUI.menuSend_button){
 			GUI.player.send(Command.send);
 			String message = GUI.playerName_label.getText()+""+GUI.menuMessage_text.getText() + "\n";
-			GUI.menuMessages_text.append(message);
+			//GUI.menuMessages_text.append(message);
+			GUI.player.send(message);
 		} else if (source == GUI.observe_button){
 			GUI.player.send(Command.observe);
 			

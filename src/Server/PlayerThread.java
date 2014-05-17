@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 public class PlayerThread extends Thread 
 {
@@ -16,7 +18,8 @@ public class PlayerThread extends Thread
 	{
 		super("PlayerThread");
 		player = sock;
-		try {
+		try
+		{
 			outToClient = new ObjectOutputStream(player.getOutputStream());
 			inFromClient = new ObjectInputStream(player.getInputStream());
 			playerName = (String)inFromClient.readObject();
@@ -28,31 +31,44 @@ public class PlayerThread extends Thread
 	public void run()
 	{
 		int num;
+		
 		System.out.println("running.....");
-		while((num = receive()) != Command.stop){
+		while((num = (Integer)receive()) != Command.stop)
+		{
 			System.out.println(num);
-			switch(num){
+			switch(num)
+			{
 				case Command.join:
 						Server.joinSessionRoom(playerName);
 					break;
 				case Command.send:
+					String message = (String)receive();
+					for (Entry<String, PlayerThread> item : Server.players.entrySet()) {
+						  item.getValue().send(Command.send);
+						  item.getValue().send(message);
+						  System.out.println(item.getValue() + message);
+					}
 					
 					break;
 			}
 		}
 	}
 	
-	public void send(int command){
-		try {
+	public void send(Object command)
+	{
+		try
+		{
 			outToClient.writeObject(command);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public int receive(){
-		try {
-			return (Integer)inFromClient.readObject();
+	public Object receive()
+	{
+		try
+		{
+			return inFromClient.readObject();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -60,7 +76,8 @@ public class PlayerThread extends Thread
 		return Command.stop;
 	}
 	
-	public String getPlayerName(){
+	public String getPlayerName()
+	{
 		return playerName;
 	}
 }

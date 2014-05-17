@@ -1,6 +1,7 @@
 package Server;
 
-public class Command {
+public class Command
+{
 	// login
 	public static final int nameTaken = 1001;
 	public static final int connectFail = 1002;

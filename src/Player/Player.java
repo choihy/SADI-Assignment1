@@ -42,8 +42,9 @@ public class Player extends Thread
 		player0Cards = new ArrayList<Card>();
 		player1Cards = new ArrayList<Card>();
 		player2Cards = new ArrayList<Card>();
+
 		while(true){
-			int command = receive();
+			int command = (Integer)receive();
 			switch(command){
 				case Command.observer:
 				case Command.player1:
@@ -67,21 +68,25 @@ public class Player extends Thread
 						getCard(command);
 					}
 					break;
+				case Command.send:
+					String message = (String) receive();
+					GUI.menuMessages_text.append(message);
+					break;
 			}
 		}
 	}
 	
-	public void send(int command){
+	public void send(Object obj){
 		try {
-			outToServer.writeObject(command);
+			outToServer.writeObject(obj);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 	}
 	
-	public int receive(){
+	public Object receive(){
 		try {
-			return inFromServer.readInt();
+			return inFromServer.readObject();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
